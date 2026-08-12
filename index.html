@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scopus Insights | Glassmorphism & Minimal</title>
+    <title>Scopus Insights | Premium Parallax & Glassmorphism</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -14,258 +14,311 @@
             background-color: #f5f5f7;
             color: #1d1d1f;
             -webkit-font-smoothing: antialiased;
-            /* พื้นหลังไล่สีแบบ Liquid ดูทันสมัย */
+            overflow-x: hidden;
+        }
+
+        /* -----------------------
+           HERO & PARALLAX STYLE
+        ------------------------ */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            /* ใช้ภาพสไตล์ Liquid / Glass แบบ Abstract จาก Unsplash */
+            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* ทำให้ภาพล็อคอยู่กับที่เวลาเลื่อน (Parallax) */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+            backdrop-filter: blur(4px);
+        }
+
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* -----------------------
+           GLASSMORPHISM CONTENT
+        ------------------------ */
+        .content-section {
+            position: relative;
             background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
             min-height: 100vh;
-            position: relative;
+            padding-bottom: 5rem;
+            z-index: 10;
         }
 
-        /* Abstract shapes in the background to enhance the glass effect */
         .bg-shape-1 {
             position: absolute;
-            top: -100px;
-            left: -100px;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(255,255,255,0) 70%);
+            top: 5%;
+            left: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, rgba(255,255,255,0) 70%);
             border-radius: 50%;
             z-index: -1;
         }
+        
         .bg-shape-2 {
             position: absolute;
-            bottom: 10%;
-            right: -50px;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(56,189,248,0.2) 0%, rgba(255,255,255,0) 70%);
+            bottom: 20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(56,189,248,0.25) 0%, rgba(255,255,255,0) 70%);
             border-radius: 50%;
             z-index: -1;
         }
 
-        /* Liquid Glass Card Style (Glassmorphism) */
         .glass-card {
-            background: rgba(255, 255, 255, 0.65); /* พื้นหลังโปร่งแสงนิดๆ */
-            backdrop-filter: blur(16px); /* เบลอภาพด้านหลัง (Glass effect) */
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.5); /* ขอบกระจก */
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 24px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); /* เงานุ่มลึก */
+            box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .glass-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.12);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 50px 0 rgba(31, 38, 135, 0.15);
         }
 
-        .solid-card {
-            background-color: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
-        }
-
-        .text-secondary {
-            color: #6e6e73;
-        }
-
-        h1, h2, h3 {
-            letter-spacing: -0.02em;
-        }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        .text-secondary { color: #6e6e73; }
         
-        /* สไตล์ตารางให้เข้ากับ Glassmorphism */
-        table tr {
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        table tr:last-child {
-            border-bottom: none;
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        table tr { border-bottom: 1px solid rgba(0,0,0,0.05); }
+        table tr:last-child { border-bottom: none; }
     </style>
 </head>
-<body class="p-4 md:p-10 relative overflow-x-hidden">
+<body>
 
-    <!-- Background Elements -->
-    <div class="bg-shape-1"></div>
-    <div class="bg-shape-2"></div>
-
-    <div class="max-w-7xl mx-auto">
+    <!-- ==============================================
+         1. HERO SECTION (ส่วนหน้าปกเต็มหน้าจอ)
+    =============================================== -->
+    <header class="hero-section">
+        <div class="hero-overlay"></div>
         
-        <!-- Header Section with Logo Area -->
-        <header class="flex flex-col md:flex-row justify-between items-center mb-12 glass-card p-6 px-10">
-            <div class="flex items-center gap-4 mb-4 md:mb-0">
-                <!-- พื้นที่สำหรับใส่ Logo -->
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                    S
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Scopus Analytics</h1>
-                    <p class="text-secondary text-sm font-medium">Data Visualization Dashboard</p>
-                </div>
+        <div class="relative z-10 text-center px-4 flex flex-col items-center">
+            <!-- Icon/Logo กลางจอ -->
+            <div class="w-20 h-20 mb-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-2xl">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
             </div>
-            <div class="text-right">
-                <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-sm font-semibold tracking-wide shadow-sm border border-blue-100">
-                    Year 2025 Data
-                </span>
-            </div>
-        </header>
+            
+            <h1 class="text-5xl md:text-7xl font-bold text-white tracking-tight mb-6 drop-shadow-lg">
+                Scopus Intelligence
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-200 font-light max-w-2xl mx-auto drop-shadow-md">
+                Discover the latest research trends, insights, and top publications of 2025.
+            </p>
+        </div>
 
-        <!-- Useful KPI Cards (Glassmorphism) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="glass-card p-8 relative overflow-hidden group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 bg-blue-100 rounded-full blur-2xl opacity-50 group-hover:bg-blue-200 transition-all"></div>
-                <p class="text-secondary text-xs font-bold uppercase tracking-widest mb-3">Total Publications</p>
-                <div class="flex items-baseline gap-2">
-                    <p class="text-5xl font-bold text-gray-900">579</p>
-                    <span class="text-sm font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">+Docs</span>
-                </div>
-                <p class="text-sm text-gray-500 mt-4 font-medium">Extracted from Scopus index</p>
-            </div>
+        <!-- Scroll Down Arrow -->
+        <a href="#dashboard" class="absolute bottom-12 text-white scroll-indicator hover:text-blue-300 transition-colors">
+            <p class="text-sm tracking-widest uppercase font-medium mb-2 opacity-80 text-center">Scroll to Explore</p>
+            <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </a>
+    </header>
+
+    <!-- ==============================================
+         2. DATA DASHBOARD (ส่วนข้อมูลที่เลื่อนลงมาเจอ)
+    =============================================== -->
+    <main id="dashboard" class="content-section">
+        
+        <!-- Abstract Shapes for Glassmorphism -->
+        <div class="bg-shape-1"></div>
+        <div class="bg-shape-2"></div>
+
+        <div class="max-w-7xl mx-auto px-4 md:px-10 pt-20">
             
-            <div class="glass-card p-8 relative overflow-hidden group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 bg-indigo-100 rounded-full blur-2xl opacity-50 group-hover:bg-indigo-200 transition-all"></div>
-                <p class="text-secondary text-xs font-bold uppercase tracking-widest mb-3">Top Research Trend</p>
-                <p class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Deep Learning</p>
-                <p class="text-sm text-gray-500 mt-4 font-medium">Primary keyword in 25 papers</p>
-            </div>
-            
-            <div class="glass-card p-8 relative overflow-hidden group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 bg-purple-100 rounded-full blur-2xl opacity-50 group-hover:bg-purple-200 transition-all"></div>
-                <p class="text-secondary text-xs font-bold uppercase tracking-widest mb-3">Top Contributor</p>
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-gray-100 border-2 border-white shadow-sm flex items-center justify-center text-gray-600 font-bold">
-                        ZY
+            <!-- Dashboard Header -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12 glass-card p-6 px-10">
+                <div class="flex items-center gap-4 mb-4 md:mb-0">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                        S
                     </div>
                     <div>
-                        <p class="text-2xl font-bold text-gray-900">Zhang Y.</p>
-                        <p class="text-sm text-gray-500 font-medium">20 Publications</p>
+                        <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Executive Dashboard</h2>
+                        <p class="text-secondary text-sm font-medium">Dataset Analysis Overview</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="inline-block px-5 py-2 rounded-full bg-white/50 backdrop-blur-sm text-indigo-700 text-sm font-bold tracking-wide shadow-sm border border-indigo-100">
+                        🗓️ Year 2025
+                    </span>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="glass-card p-8 relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-blue-200/50 rounded-full blur-2xl group-hover:bg-blue-300/50 transition-all"></div>
+                    <p class="text-secondary text-xs font-bold uppercase tracking-widest mb-3">Total Publications</p>
+                    <div class="flex items-baseline gap-2">
+                        <p class="text-5xl font-bold text-gray-900">579</p>
+                        <span class="text-sm font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100">Docs</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 font-medium">Extracted from Scopus</p>
+                </div>
+                
+                <div class="glass-card p-8 relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-indigo-200/50 rounded-full blur-2xl group-hover:bg-indigo-300/50 transition-all"></div>
+                    <p class="text-secondary text-xs font-bold uppercase tracking-widest mb-3">Top Research Trend</p>
+                    <p class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Deep Learning</p>
+                    <p class="text-sm text-gray-500 mt-4 font-medium">Primary keyword in 25 papers</p>
+                </div>
+                
+                <div class="glass-card p-8 relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-purple-200/50 rounded-full blur-2xl group-hover:bg-purple-300/50 transition-all"></div>
+                    <p class="text-secondary text-xs font-bold uppercase tracking-widest mb-3">Top Contributor</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-white border-2 border-indigo-100 shadow-sm flex items-center justify-center text-indigo-600 font-bold">
+                            ZY
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-gray-900">Zhang Y.</p>
+                            <p class="text-sm text-gray-500 font-medium">20 Publications</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Main Content Area -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Analysis Summary -->
+                <div class="lg:col-span-3 glass-card p-8 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-blue-400 to-indigo-600"></div>
+                    <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
+                        <span class="text-xl">✨</span> Key Insights
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed font-medium">
+                        แนวโน้มงานวิจัยในปี 2025 มุ่งเน้นไปที่เทคโนโลยี AI อย่างชัดเจน โดย <strong class="text-gray-900">Deep Learning, Fault Diagnosis และ Machine Learning</strong> เป็นหัวข้อหลักที่มีการตีพิมพ์สูงสุด แหล่งตีพิมพ์ยอดนิยมคือ <em>Engineering Research Express</em> สะท้อนถึงเทรนด์การประยุกต์ใช้ AI ในงานวิศวกรรม
+                    </p>
+                </div>
+
+                <!-- Keywords Chart -->
+                <div class="lg:col-span-2 glass-card p-8">
+                    <div class="mb-6">
+                        <h2 class="text-xl font-bold text-gray-900">Top Research Themes</h2>
+                        <p class="text-secondary text-sm mt-1 font-medium">Keywords with highest frequency</p>
+                    </div>
+                    <div class="relative h-64 w-full">
+                        <canvas id="keywordsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Doc Type Chart -->
+                <div class="glass-card p-8 flex flex-col">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900">Document Type</h2>
+                        <p class="text-secondary text-sm mt-1 font-medium">Articles vs Conference Papers</p>
+                    </div>
+                    <div class="relative flex-grow flex items-center justify-center mt-6 h-48 w-full">
+                        <canvas id="docTypeChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Top Authors -->
+                <div class="lg:col-span-1 glass-card p-8">
+                    <div class="mb-6">
+                        <h2 class="text-xl font-bold text-gray-900">Top Authors</h2>
+                        <p class="text-secondary text-sm mt-1 font-medium">Researchers by volume</p>
+                    </div>
+                    <div class="relative h-64 w-full">
+                        <canvas id="authorsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Top Sources -->
+                <div class="lg:col-span-2 glass-card p-8">
+                    <div class="mb-6">
+                        <h2 class="text-xl font-bold text-gray-900">Leading Sources</h2>
+                        <p class="text-secondary text-sm mt-1 font-medium">Journals and Conferences</p>
+                    </div>
+                    <div class="relative h-64 w-full">
+                        <canvas id="sourcesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="glass-card p-8">
+                <h2 class="text-xl font-bold text-gray-900 mb-1">Highest Impact Publications</h2>
+                <p class="text-secondary text-sm mb-6 font-medium">Top 5 cited documents</p>
+                
+                <div class="overflow-x-auto no-scrollbar">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="py-4 px-2 text-xs font-bold text-secondary uppercase tracking-widest w-16">Rank</th>
+                                <th class="py-4 px-2 text-xs font-bold text-secondary uppercase tracking-widest">Title</th>
+                                <th class="py-4 px-2 text-xs font-bold text-secondary uppercase tracking-widest text-right w-24">Citations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-white/40 transition duration-200">
+                                <td class="py-5 px-2 text-sm font-bold text-gray-400">01</td>
+                                <td class="py-5 px-2 pr-4 text-sm font-semibold text-gray-800 leading-snug">Generative AI and Literacy Development in the Language Classroom: A Systematic Review of Literature</td>
+                                <td class="py-5 px-2 text-right text-lg font-bold text-indigo-600">23</td>
+                            </tr>
+                            <tr class="hover:bg-white/40 transition duration-200">
+                                <td class="py-5 px-2 text-sm font-bold text-gray-400">02</td>
+                                <td class="py-5 px-2 pr-4 text-sm font-semibold text-gray-800 leading-snug">Personalized colorectal cancer risk assessment through explainable AI and Gut microbiome profiling</td>
+                                <td class="py-5 px-2 text-right text-lg font-bold text-indigo-600">19</td>
+                            </tr>
+                            <tr class="hover:bg-white/40 transition duration-200">
+                                <td class="py-5 px-2 text-sm font-bold text-gray-400">03</td>
+                                <td class="py-5 px-2 pr-4 text-sm font-semibold text-gray-800 leading-snug">Fundamentals to emerging concepts and applications of metasurfaces for flat optics: a tutorial</td>
+                                <td class="py-5 px-2 text-right text-lg font-bold text-indigo-600">14</td>
+                            </tr>
+                            <tr class="hover:bg-white/40 transition duration-200">
+                                <td class="py-5 px-2 text-sm font-bold text-gray-400">04</td>
+                                <td class="py-5 px-2 pr-4 text-sm font-semibold text-gray-800 leading-snug">Artificial Intelligence-Assisted Clinical Decision-Making: A Perspective on Advancing Personalized Precision Medicine for Elderly Diabetes Patients</td>
+                                <td class="py-5 px-2 text-right text-lg font-bold text-indigo-600">9</td>
+                            </tr>
+                            <tr class="hover:bg-white/40 transition duration-200">
+                                <td class="py-5 px-2 text-sm font-bold text-gray-400">05</td>
+                                <td class="py-5 px-2 pr-4 text-sm font-semibold text-gray-800 leading-snug">Type-2 Fuzzy control for stabilizing two-wheeled mobile robot under parameter uncertainties</td>
+                                <td class="py-5 px-2 text-right text-lg font-bold text-indigo-600">8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             
-            <!-- Analysis Summary with Liquid Glass styling -->
-            <div class="lg:col-span-3 glass-card p-8 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-blue-400 to-indigo-600"></div>
-                <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
-                    <span class="text-xl">✨</span> Executive Insights
-                </h3>
-                <p class="text-gray-700 leading-relaxed font-medium">
-                    แนวโน้มงานวิจัยในปี 2025 มุ่งเน้นไปที่เทคโนโลยี AI อย่างชัดเจน โดย <strong class="text-gray-900">Deep Learning, Fault Diagnosis และ Machine Learning</strong> เป็นหัวข้อหลักที่มีการตีพิมพ์สูงสุด แหล่งตีพิมพ์ยอดนิยมคือ <em>Engineering Research Express</em> สะท้อนถึงเทรนด์การประยุกต์ใช้ AI ในงานวิศวกรรม
-                </p>
-            </div>
-
-            <!-- Keywords Chart -->
-            <div class="lg:col-span-2 glass-card p-8">
-                <div class="mb-6">
-                    <h2 class="text-xl font-bold text-gray-900">Top Research Themes</h2>
-                    <p class="text-secondary text-sm mt-1 font-medium">Keywords with highest frequency</p>
-                </div>
-                <div class="relative h-64 w-full">
-                    <canvas id="keywordsChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Doc Type Chart -->
-            <div class="glass-card p-8 flex flex-col">
-                <div>
-                    <h2 class="text-xl font-bold text-gray-900">Document Type</h2>
-                    <p class="text-secondary text-sm mt-1 font-medium">Articles vs Conference Papers</p>
-                </div>
-                <div class="relative flex-grow flex items-center justify-center mt-6 h-48 w-full">
-                    <canvas id="docTypeChart"></canvas>
-                </div>
-            </div>
-            
-            <!-- Top Authors -->
-            <div class="lg:col-span-1 glass-card p-8">
-                <div class="mb-6">
-                    <h2 class="text-xl font-bold text-gray-900">Top Authors</h2>
-                    <p class="text-secondary text-sm mt-1 font-medium">Researchers by volume</p>
-                </div>
-                <div class="relative h-64 w-full">
-                    <canvas id="authorsChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Top Sources -->
-            <div class="lg:col-span-2 glass-card p-8">
-                <div class="mb-6">
-                    <h2 class="text-xl font-bold text-gray-900">Leading Sources</h2>
-                    <p class="text-secondary text-sm mt-1 font-medium">Journals and Conferences</p>
-                </div>
-                <div class="relative h-64 w-full">
-                    <canvas id="sourcesChart"></canvas>
-                </div>
-            </div>
         </div>
+    </main>
 
-        <!-- Clean Minimal Table (Glass) -->
-        <div class="glass-card p-8 mb-12">
-            <h2 class="text-xl font-bold text-gray-900 mb-1">Highest Impact Publications</h2>
-            <p class="text-secondary text-sm mb-6 font-medium">Top 5 cited documents</p>
-            
-            <div class="overflow-x-auto no-scrollbar">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr>
-                            <th class="py-4 px-2 text-xs font-bold text-secondary uppercase tracking-widest w-16">Rank</th>
-                            <th class="py-4 px-2 text-xs font-bold text-secondary uppercase tracking-widest">Title</th>
-                            <th class="py-4 px-2 text-xs font-bold text-secondary uppercase tracking-widest text-right w-24">Citations</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="hover:bg-white/40 transition duration-200">
-                            <td class="py-5 px-2 text-sm font-bold text-gray-400">01</td>
-                            <td class="py-5 px-2 pr-4 text-sm font-semibold text-gray-800 leading-snug">Generative AI and Literacy Development in the Language Classroom: A Systematic Review of Literature</td>
-                            <td class="py-5 px-2 text-right text-lg font-bold text-indigo-600">23</td>
-                        </tr>
-                        <tr class="hover:bg-white/40 transition duration-200">
-                            <td class="py-5 px-2 text-sm font-bold text-gray-400">02</td>
-                            <td class="py-5 px-2 pr-4 text-sm font-semibold text-gray-800 leading-snug">Personalized colorectal cancer risk assessment through explainable AI and Gut microbiome profiling</td>
-                            <td class="py-5 px-2 text-right text-lg font-bold text-indigo-600">19</td>
-                        </tr>
-                        <tr class="hover:bg-white/40 transition duration-200">
-                            <td class="py-5 px-2 text-sm font-bold text-gray-400">03</td>
-                            <td class="py-5 px-2 pr-4 text-sm font-semibold text-gray-800 leading-snug">Fundamentals to emerging concepts and applications of metasurfaces for flat optics: a tutorial</td>
-                            <td class="py-5 px-2 text-right text-lg font-bold text-indigo-600">14</td>
-                        </tr>
-                        <tr class="hover:bg-white/40 transition duration-200">
-                            <td class="py-5 px-2 text-sm font-bold text-gray-400">04</td>
-                            <td class="py-5 px-2 pr-4 text-sm font-semibold text-gray-800 leading-snug">Artificial Intelligence-Assisted Clinical Decision-Making: A Perspective on Advancing Personalized Precision Medicine for Elderly Diabetes Patients</td>
-                            <td class="py-5 px-2 text-right text-lg font-bold text-indigo-600">9</td>
-                        </tr>
-                        <tr class="hover:bg-white/40 transition duration-200">
-                            <td class="py-5 px-2 text-sm font-bold text-gray-400">05</td>
-                            <td class="py-5 px-2 pr-4 text-sm font-semibold text-gray-800 leading-snug">Type-2 Fuzzy control for stabilizing two-wheeled mobile robot under parameter uncertainties</td>
-                            <td class="py-5 px-2 text-right text-lg font-bold text-indigo-600">8</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-    </div>
-
-    <!-- Chart Configs -->
+    <!-- Script for Charts -->
     <script>
-        // Global Chart.js defaults
         Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif';
         Chart.defaults.color = '#6e6e73';
         Chart.defaults.scale.grid.display = false;
-        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(255, 255, 255, 0.95)';
         Chart.defaults.plugins.tooltip.titleColor = '#1d1d1f';
         Chart.defaults.plugins.tooltip.bodyColor = '#1d1d1f';
-        Chart.defaults.plugins.tooltip.borderColor = 'rgba(0,0,0,0.05)';
+        Chart.defaults.plugins.tooltip.borderColor = 'rgba(0,0,0,0.1)';
         Chart.defaults.plugins.tooltip.borderWidth = 1;
         Chart.defaults.plugins.tooltip.padding = 12;
         Chart.defaults.plugins.tooltip.cornerRadius = 12;
@@ -273,17 +326,16 @@
 
         const primaryGradient = (ctx) => {
             const chartArea = ctx.chart.chartArea;
-            if (!chartArea) return '#007aff';
+            if (!chartArea) return '#3b82f6';
             const gradient = ctx.chart.ctx.createLinearGradient(0, 0, chartArea.right, 0);
-            gradient.addColorStop(0, '#3b82f6'); // blue-500
-            gradient.addColorStop(1, '#6366f1'); // indigo-500
+            gradient.addColorStop(0, '#3b82f6');
+            gradient.addColorStop(1, '#6366f1');
             return gradient;
         };
 
         const darkAccent = '#1d1d1f';
-        const glassBg = 'rgba(255, 255, 255, 0.5)';
 
-        // 1. Keywords (Horizontal Bar)
+        // 1. Keywords
         new Chart(document.getElementById('keywordsChart').getContext('2d'), {
             type: 'bar',
             data: {
@@ -292,7 +344,6 @@
                     data: [25, 20, 13, 9, 7, 7],
                     backgroundColor: function(context) { return primaryGradient(context); },
                     borderRadius: 8,
-                    borderSkipped: false,
                     barThickness: 16
                 }]
             },
@@ -303,15 +354,12 @@
                 plugins: { legend: { display: false } },
                 scales: {
                     x: { display: false },
-                    y: { 
-                        border: { display: false },
-                        ticks: { font: { size: 13, weight: '600' }, color: darkAccent }
-                    }
+                    y: { border: { display: false }, ticks: { font: { size: 13, weight: '600' }, color: darkAccent } }
                 }
             }
         });
 
-        // 2. Document Type (Doughnut)
+        // 2. Document Type
         new Chart(document.getElementById('docTypeChart').getContext('2d'), {
             type: 'doughnut',
             data: {
@@ -329,15 +377,12 @@
                 maintainAspectRatio: false,
                 cutout: '70%',
                 plugins: { 
-                    legend: { 
-                        position: 'bottom',
-                        labels: { usePointStyle: true, boxWidth: 8, padding: 20, color: darkAccent, font: {weight: '500'} }
-                    } 
+                    legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, padding: 20, color: darkAccent, font: {weight: '500'} } } 
                 }
             }
         });
 
-        // 3. Top Sources (Bar)
+        // 3. Top Sources
         new Chart(document.getElementById('sourcesChart').getContext('2d'), {
             type: 'bar',
             data: {
@@ -346,7 +391,6 @@
                     data: [229, 34, 30, 30, 15],
                     backgroundColor: 'rgba(29, 29, 31, 0.85)',
                     borderRadius: 8,
-                    borderSkipped: false,
                     barThickness: 28
                 }]
             },
@@ -356,15 +400,12 @@
                 plugins: { legend: { display: false } },
                 scales: {
                     y: { display: false },
-                    x: { 
-                        border: { display: false },
-                        ticks: { font: { size: 12, weight: '500' }, color: darkAccent }
-                    }
+                    x: { border: { display: false }, ticks: { font: { size: 12, weight: '500' }, color: darkAccent } }
                 }
             }
         });
 
-        // 4. Top Authors (Horizontal Bar)
+        // 4. Top Authors
         new Chart(document.getElementById('authorsChart').getContext('2d'), {
             type: 'bar',
             data: {
@@ -375,7 +416,6 @@
                     borderColor: 'rgba(0,0,0,0.05)',
                     borderWidth: 1,
                     borderRadius: 8,
-                    borderSkipped: false,
                     barThickness: 16
                 }]
             },
@@ -386,10 +426,7 @@
                 plugins: { legend: { display: false } },
                 scales: {
                     x: { display: false },
-                    y: { 
-                        border: { display: false },
-                        ticks: { font: { size: 13, weight: '600' }, color: darkAccent }
-                    }
+                    y: { border: { display: false }, ticks: { font: { size: 13, weight: '600' }, color: darkAccent } }
                 }
             }
         });
